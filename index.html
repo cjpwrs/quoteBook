@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="quoteBook">
+<head>
+    <meta charset="UTF-8">
+    <title>Quote Book</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container" ng-controller="mainCtrl">
+        <div class="container">
+            <h1>Quote Book</h1>
+            <form class="form-inline search-form">
+                Search: <input class="form-control" ng-model="searcher">
+                Sort by: <select class="form-control" ng-model="selected" ng-options="option for option in selectorOptions"></select>
+            </form>
+        </div>
+
+        <div class="container quoteHolder" ng-repeat="quote in quotes | filter:searcher | orderBy:selected">
+            <div class="infoBar">
+                <a class="glyphicon glyphicon-minus" ng-click="hideQuote(quote.id)"></a>
+                <a class="glyphicon glyphicon-remove" ng-click="removeQuote(quote.text)"></a>
+            </div>
+
+            <h2 ng-class="{hide: quote.hide}"><span class="quotation">"</span>{{quote.text}}<span class="quotation">"</span> <br>
+                <span class="author">-{{quote.author}}</span></h2>
+        </div>
+        <form class="form-inline add-quote">
+            <input class="form-control" ng-model="text" type="text" placeholder="Quote Text">
+            <input class="form-control" ng-model="author" type="text" placeholder="Quote Author">
+            <button class="form-control" ng-click="addQuote(text, author)">Add Quote</button>
+        </form>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="app.js"></script>
+<script src="mainCtrl.js"></script>
+<script src="dataService.js"></script>
+</body>
+</html>
